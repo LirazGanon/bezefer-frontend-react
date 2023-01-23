@@ -6,6 +6,7 @@ const STORAGE_KEY = "STUDENT";
 export const studentService = {
   query,
   save,
+  remove,
 };
 
 async function query(filterBy = {}) {
@@ -54,6 +55,11 @@ async function query(filterBy = {}) {
   //   spas = spas.filter(spa => spa.location.city.toLowerCase() === filterBy.city.toLowerCase())
   // }
   return students;
+}
+
+async function remove(studentId: string | number) {
+  return await storageService.remove(STORAGE_KEY, studentId);
+  // return httpService.delete(`spa/${spaId}`)
 }
 
 async function save(student: Student) {

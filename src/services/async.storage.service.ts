@@ -50,7 +50,10 @@ function put(entityType: string, updatedEntity: any): Promise<any> {
   });
 }
 
-async function remove(entityType: string, entityId: string): Promise<void> {
+async function remove(
+  entityType: string,
+  entityId: string | number
+): Promise<void> {
   const entities: any[] = await query(entityType);
   const idx = entities.findIndex((entity) => entity._id === entityId);
   if (idx < 0)

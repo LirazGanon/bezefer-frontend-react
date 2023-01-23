@@ -27,10 +27,16 @@ export const ClassesSlice = createSlice({
     addClassroom: (state, action: PayloadAction<Classroom>) => {
       state.Classes.push(action.payload);
     },
+    deleteClassroom: (state, action: PayloadAction<number | string>) => {
+      state.Classes = state.Classes.filter(
+        (classroom) => classroom._id !== action.payload
+      );
+    },
   },
 });
 
-export const { setClasses, addClassroom } = ClassesSlice.actions;
+export const { setClasses, addClassroom, deleteClassroom } =
+  ClassesSlice.actions;
 
 export const getClasses = () => async (dispatch: Dispatch) => {
   try {

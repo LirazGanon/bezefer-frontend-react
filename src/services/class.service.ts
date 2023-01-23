@@ -6,6 +6,7 @@ const STORAGE_KEY = "CLASS";
 export const classService = {
   query,
   save,
+  remove,
 };
 
 async function query(filterBy = {}) {
@@ -66,6 +67,11 @@ async function save(classroom: Classroom) {
   // savedClassroom = await httpService.post('spa', classroom)
   // }
   return savedClassroom;
+}
+
+async function remove(classroomId: string | number) {
+  return await storageService.remove(STORAGE_KEY, classroomId);
+  // return httpService.delete(`spa/${spaId}`)
 }
 
 function _getDemoClasses() {

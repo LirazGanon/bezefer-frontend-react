@@ -28,10 +28,16 @@ export const studentsSlice = createSlice({
     addStudents: (state, action: PayloadAction<Student>) => {
       state.students.push(action.payload);
     },
+    deleteStudent: (state, action: PayloadAction<number | string>) => {
+      state.students = state.students.filter(
+        (student) => student._id !== action.payload
+      );
+    },
   },
 });
 
-export const { setStudents, addStudents } = studentsSlice.actions;
+export const { setStudents, addStudents, deleteStudent } =
+  studentsSlice.actions;
 
 export const getStudents = () => async (dispatch: Dispatch) => {
   try {
