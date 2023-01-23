@@ -5,20 +5,24 @@ import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import IconButton from "@mui/material/IconButton";
 import MenuIcon from "@mui/icons-material/Menu";
-import MenuItem from "@mui/material/MenuItem";
-import Menu from "@mui/material/Menu";
+import Drawer from "@mui/material/Drawer";
+import List from "@mui/material/List";
+import ListItem from "@mui/material/ListItem";
+import ListItemIcon from "@mui/material/ListItemIcon";
+import ListItemText from "@mui/material/ListItemText";
 import { Link } from "react-router-dom";
 import * as S from "./AppHeaderStyle";
+import LeftDrawer from "../LeftDrawer/LeftDrawer";
 
 export const AppHeader = () => {
-  const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+  const [drawerOpen, setDrawerOpen] = React.useState(false);
 
-  const handleMenu = (event: React.MouseEvent<HTMLElement>) => {
-    setAnchorEl(event.currentTarget);
+  const handleDrawerOpen = () => {
+    setDrawerOpen(true);
   };
 
-  const handleClose = () => {
-    setAnchorEl(null);
+  const handleDrawerClose = () => {
+    setDrawerOpen(false);
   };
 
   return (
@@ -31,16 +35,16 @@ export const AppHeader = () => {
             color="inherit"
             aria-label="menu"
             sx={{ mr: 2 }}
+            onClick={handleDrawerOpen}
           >
             <MenuIcon />
           </IconButton>
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
             Shob Classes
           </Typography>
-          <Link to="/">Classes</Link> | <Link to="/student">Students</Link> |
-          <Link to="/add">Add</Link>
         </Toolbar>
       </S.AppHeaderBar>
+      <LeftDrawer open={drawerOpen} onClose={handleDrawerClose} />
     </Box>
   );
 };
