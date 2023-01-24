@@ -3,7 +3,7 @@ import { Dispatch } from "redux";
 import { studentService } from "../../services/student.service";
 
 export interface Student {
-  _id: string | number;
+  _id: number;
   firstName: string;
   lastName: string;
   age?: number;

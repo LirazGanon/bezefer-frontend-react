@@ -77,14 +77,14 @@ async function save(student: Student) {
 function _getDemoStudents() {
   const students = [
     {
-      _id: "student1",
+      _id: 12345,
       firstName: "Student",
       lastName: "One",
       age: 30,
       profession: "Expert Tester",
     },
     {
-      _id: "student2",
+      _id: 123456,
       firstName: "Student",
       lastName: "Two",
       age: 27,

@@ -7,6 +7,7 @@ export const classService = {
   query,
   save,
   remove,
+  update,
 };
 
 async function query(filterBy = {}) {
@@ -58,14 +59,15 @@ async function query(filterBy = {}) {
 }
 
 async function save(classroom: Classroom) {
-  var savedClassroom;
-  // if (classroom._id) {
-  // savedClassroom = await storageService.put(STORAGE_KEY, classroom);
-  // savedClassroom = await httpService.put(`spa/${spa._id}`, classroom)
-  // } else {
-  savedClassroom = await storageService.post(STORAGE_KEY, classroom);
+  const savedClassroom = await storageService.post(STORAGE_KEY, classroom);
   // savedClassroom = await httpService.post('spa', classroom)
   // }
+  return savedClassroom;
+}
+async function update(classroom: Classroom) {
+  const savedClassroom = await storageService.put(STORAGE_KEY, classroom);
+  // savedClassroom = await httpService.put(`spa/${spa._id}`, classroom)
+
   return savedClassroom;
 }
 
@@ -80,13 +82,15 @@ function _getDemoClasses() {
       _id: "class1",
       name: "Class-1",
       totalPlaces: 30,
-      placeLeft: 20,
+      placeLeft: 30,
+      students: [],
     },
     {
       _id: "class2",
       name: "Class-2",
       totalPlaces: 30,
-      placeLeft: 20,
+      placeLeft: 30,
+      students: [],
     },
   ];
 

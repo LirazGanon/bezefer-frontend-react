@@ -5,8 +5,9 @@ import { Dispatch } from "redux";
 export interface Classroom {
   _id: string | number;
   name: string;
-  totalPlaces?: number;
-  placeLeft?: number;
+  totalPlaces: number;
+  placeLeft: number;
+  students: (string | number)[];
 }
 
 interface ClassesState {
@@ -32,10 +33,24 @@ export const ClassesSlice = createSlice({
         (classroom) => classroom._id !== action.payload
       );
     },
+    assignStudent: (
+      state,
+      action: PayloadAction<{
+        classroomId: number | string;
+        studentId: number | string;
+      }>
+    ) => {
+      const classroomIdx = state.Classes.findIndex(
+        (classroom) => classroom._id === action.payload.classroomId
+      );
+      state.Classes[classroomIdx].students.push(action.payload.studentId);
+      state.Classes[classroomIdx].placeLeft--;
+      classService.update(state.Classes[classroomIdx]);
+    },
   },
 });
 
-export const { setClasses, addClassroom, deleteClassroom } =
+export const { setClasses, addClassroom, deleteClassroom, assignStudent } =
   ClassesSlice.actions;
 
 export const getClasses = () => async (dispatch: Dispatch) => {
