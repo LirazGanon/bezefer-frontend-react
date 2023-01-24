@@ -65,6 +65,19 @@ export const ClassesSlice = createSlice({
       state.Classes[classroomIdx].placeLeft++;
       classService.update(state.Classes[classroomIdx]);
     },
+    removeStudentFromAll: (state, action: PayloadAction<number>) => {
+      state.Classes.forEach((classroom) => {
+        const studentIdx = classroom.students.findIndex(
+          (studentId) => studentId === action.payload
+        );
+        if (studentIdx >= 0) {
+          console.log("hi");
+          classroom.students.splice(studentIdx, 1);
+          classroom.placeLeft++;
+          classService.update(classroom);
+        }
+      });
+    },
   },
 });
 
@@ -74,6 +87,7 @@ export const {
   deleteClassroom,
   assignStudent,
   removeStudent,
+  removeStudentFromAll,
 } = ClassesSlice.actions;
 
 export const getClasses = () => async (dispatch: Dispatch) => {

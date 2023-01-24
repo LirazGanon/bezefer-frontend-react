@@ -1,7 +1,10 @@
 import React, { FC, useState } from "react";
 
 import { useAppDispatch, useAppSelector } from "../../store.toolkit/store";
-import { assignStudent } from "../../store.toolkit/features/class.slice";
+import {
+  assignStudent,
+  removeStudentFromAll,
+} from "../../store.toolkit/features/class.slice";
 import * as S from "./StudentListStyle";
 import { deleteStudent } from "../../store.toolkit/features/student.slice";
 
@@ -29,6 +32,7 @@ export const StudentList: FC = () => {
     try {
       studentService.remove(studentId);
       dispatch(deleteStudent(studentId));
+      dispatch(removeStudentFromAll(studentId));
     } catch (err) {
       console.log("err", err);
     }
