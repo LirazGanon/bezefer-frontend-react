@@ -12,8 +12,8 @@ export const ClassroomList: FC = () => {
 
   return (
     <MainGrid container spacing={6}>
-      {classes.map((classRoom) => (
-        <ClassroomCard key={classRoom._id} classRoom={classRoom} />
+      {classes.map((classroom) => (
+        <ClassroomCard key={classroom._id} classroom={classroom} />
       ))}
     </MainGrid>
   );

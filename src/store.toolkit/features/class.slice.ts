@@ -47,11 +47,34 @@ export const ClassesSlice = createSlice({
       state.Classes[classroomIdx].placeLeft--;
       classService.update(state.Classes[classroomIdx]);
     },
+    removeStudent: (
+      state,
+      action: PayloadAction<{
+        classroomId: number | string;
+        studentId: number;
+      }>
+    ) => {
+      const classroomIdx = state.Classes.findIndex(
+        (classroom) => classroom._id === action.payload.classroomId
+      );
+      const studentIdx = state.Classes[classroomIdx].students.findIndex(
+        (studentId) => studentId === action.payload.studentId
+      );
+
+      state.Classes[classroomIdx].students.splice(studentIdx, 1);
+      state.Classes[classroomIdx].placeLeft++;
+      classService.update(state.Classes[classroomIdx]);
+    },
   },
 });
 
-export const { setClasses, addClassroom, deleteClassroom, assignStudent } =
-  ClassesSlice.actions;
+export const {
+  setClasses,
+  addClassroom,
+  deleteClassroom,
+  assignStudent,
+  removeStudent,
+} = ClassesSlice.actions;
 
 export const getClasses = () => async (dispatch: Dispatch) => {
   try {
