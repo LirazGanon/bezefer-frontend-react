@@ -77,18 +77,39 @@ async function save(student: Student) {
 function _getDemoStudents() {
   const students = [
     {
-      _id: 12345,
-      firstName: "Student",
-      lastName: "One",
-      age: 30,
-      profession: "Expert Tester",
+      _id: 938475845,
+      firstName: "דוד",
+      lastName: "שימי",
+      age: 65,
+      profession: "חשמליזציה",
     },
     {
-      _id: 123456,
-      firstName: "Student",
-      lastName: "Two",
+      _id: 435476567,
+      firstName: "יוסי",
+      lastName: "בן יוסי",
+      age: 99,
+      profession: "יוסאי",
+    },
+    {
+      _id: 272727270,
+      firstName: "איימי",
+      lastName: "ויינהאוס",
       age: 27,
-      profession: "King Tester",
+      profession: "זמרת בכירה",
+    },
+    {
+      _id: 435835540,
+      firstName: "עמוס",
+      lastName: "סומע",
+      age: 100,
+      profession: "מורה רוחני",
+    },
+    {
+      _id: 938465769,
+      firstName: "ריף",
+      lastName: "רף",
+      age: 32,
+      profession: "מטקאי",
     },
   ];
 

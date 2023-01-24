@@ -79,17 +79,45 @@ async function remove(classroomId: string | number) {
 function _getDemoClasses() {
   const classes = [
     {
-      _id: "class1",
-      name: "Class-1",
-      totalPlaces: 30,
-      placeLeft: 30,
+      _id: storageService.makeId(),
+      name: "אלון",
+      totalPlaces: 2,
+      placeLeft: 2,
       students: [],
     },
     {
-      _id: "class2",
-      name: "Class-2",
-      totalPlaces: 30,
-      placeLeft: 30,
+      _id: storageService.makeId(),
+      name: "שקמה",
+      totalPlaces: 11111,
+      placeLeft: 11111,
+      students: [],
+    },
+    {
+      _id: storageService.makeId(),
+      name: "שיטה",
+      totalPlaces: 96,
+      placeLeft: 96,
+      students: [],
+    },
+    {
+      _id: storageService.makeId(),
+      name: "תאנה",
+      totalPlaces: 45,
+      placeLeft: 45,
+      students: [],
+    },
+    {
+      _id: storageService.makeId(),
+      name: "גפן",
+      totalPlaces: 1,
+      placeLeft: 1,
+      students: [],
+    },
+    {
+      _id: storageService.makeId(),
+      name: "ארזים",
+      totalPlaces: 22,
+      placeLeft: 22,
       students: [],
     },
   ];
