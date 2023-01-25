@@ -1,13 +1,16 @@
-import { styled, TableRow } from "@mui/material";
+import { Button, styled } from "@mui/material";
 
 export const MainContainer = styled("main")({
   padding: "2em",
 });
 
-// EXAMPLE HOW TO USE SELECTOR
-// TODO DELETE
-export const TableStudent = styled(TableRow)({
-  "& :last-child": {
-    fontSize: "50px",
+export const ActionButton = styled(Button, {
+  shouldForwardProp: (prop) => prop !== "themeColor",
+})<{ themeColor: string }>(({ themeColor }) => ({
+  color: themeColor,
+  borderColor: themeColor,
+  "&:hover": {
+    borderColor: themeColor,
+    backgroundColor: themeColor + "20",
   },
-});
+}));

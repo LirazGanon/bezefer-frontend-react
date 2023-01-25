@@ -1,5 +1,5 @@
 import { TextField } from "@mui/material";
-import React from "react";
+import React, { useContext } from "react";
 import { useNavigate } from "react-router";
 import { useForm } from "../../customHooks/useForm";
 import { classService } from "../../services/class.service";
@@ -9,10 +9,13 @@ import {
 } from "../../store.toolkit/features/class.slice";
 import { useAppDispatch } from "../../store.toolkit/store";
 import * as S from "./AddClassroomStyle";
+import { ThemeContext } from "../../App";
 
 export default function AddClassroom() {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
+
+  const color = useContext(ThemeContext);
 
   const [classroom, handleChange, setClassroom] = useForm({
     _id: "",
@@ -86,7 +89,7 @@ export default function AddClassroom() {
           variant="outlined"
           required
         />
-        <S.SubmitButton>Create Class</S.SubmitButton>
+        <S.SubmitButton themeColor={color}>Create Class</S.SubmitButton>
       </S.ClassroomAddForm>
     </section>
   );

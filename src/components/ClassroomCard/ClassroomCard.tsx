@@ -4,7 +4,7 @@ import MuiAlert, { AlertProps } from "@mui/material/Alert";
 
 import Grid from "@mui/material/Grid";
 import Snackbar from "@mui/material/Snackbar";
-import React, { FC, useState } from "react";
+import React, { FC, useContext, useState } from "react";
 import { classService } from "../../services/class.service";
 import {
   Classroom,
@@ -15,6 +15,7 @@ import { useAppDispatch, useAppSelector } from "../../store.toolkit/store";
 import { RemoveModal } from "../RemoveModal/RemoveModal";
 import DeleteIcon from "@mui/icons-material/Delete";
 import * as S from "./ClassroomCardStyle";
+import { ThemeContext } from "../../App";
 
 const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
   props,
@@ -32,6 +33,8 @@ export const ClassroomCard: FC<{ classroom: Classroom }> = ({ classroom }) => {
   const handleClose = () => setOpen(false);
 
   const [openAlert, setOpenAlert] = useState(false);
+
+  const color = useContext(ThemeContext);
 
   const handleCloseAlert = (
     event?: React.SyntheticEvent | Event,
@@ -76,7 +79,7 @@ export const ClassroomCard: FC<{ classroom: Classroom }> = ({ classroom }) => {
           </div>
           <S.BottomContainer>
             <p onClick={handleOpen}>STUDENTS LIST</p>
-            <S.DeleteStudent onClick={deleteClass}>X</S.DeleteStudent>
+            <S.DeleteStudent themeColor={color} onClick={deleteClass} />
           </S.BottomContainer>
         </S.ClassroomCard>
       </Grid>

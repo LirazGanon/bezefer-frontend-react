@@ -1,4 +1,4 @@
-import React, { FC, useState } from "react";
+import React, { FC, useContext, useState } from "react";
 
 import { useAppDispatch, useAppSelector } from "../../store.toolkit/store";
 import {
@@ -19,6 +19,7 @@ import { studentService } from "../../services/student.service";
 import { AssignModal } from "../../components/AssignModal/AssignModal";
 import { Button } from "@mui/material";
 import { ConfirmDialog } from "../../components/ConfirmDialog/ConfirmDialog";
+import { ThemeContext } from "../../App";
 
 export const StudentList: FC = () => {
   const students = useAppSelector((state) => state.student.students);
@@ -29,6 +30,7 @@ export const StudentList: FC = () => {
   const handleClose = () => setOpen(false);
 
   const [openConfirm, setOpenConfirm] = useState(false);
+  const color = useContext(ThemeContext);
 
   const handleConfirmOpen = () => {
     setOpenConfirm(true);
@@ -94,20 +96,22 @@ export const StudentList: FC = () => {
                 <TableCell align="center">{student.age}</TableCell>
                 <TableCell align="center">{student.profession}</TableCell>
                 <TableCell align="center">
-                  <Button
+                  <S.ActionButton
                     variant="outlined"
                     onClick={() => openAssignModal(student._id)}
+                    themeColor={color}
                   >
                     ASSIGN TO CLASS
-                  </Button>
+                  </S.ActionButton>
                 </TableCell>
                 <TableCell align="center">
-                  <Button
+                  <S.ActionButton
                     variant="outlined"
                     onClick={() => handleRemoveClick(student._id)}
+                    themeColor={color}
                   >
                     DELETE
-                  </Button>
+                  </S.ActionButton>
                 </TableCell>
               </TableRow>
             ))}

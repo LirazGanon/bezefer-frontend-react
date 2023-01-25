@@ -14,13 +14,15 @@ export const ClassroomAddForm = styled("form")({
   },
 });
 
-export const SubmitButton = styled("button")({
+export const SubmitButton = styled("button", {
+  shouldForwardProp: (prop) => prop !== "themeColor",
+})<{ themeColor: string }>(({ themeColor }) => ({
   color: "#fff",
   padding: "10px",
   fontSize: "1.25rem",
   textTransform: "uppercase",
-  background: "#3F50B5",
+  background: themeColor,
   border: "none",
   borderRadius: "5px",
   cursor: "pointer",
-});
+}));

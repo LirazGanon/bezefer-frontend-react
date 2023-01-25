@@ -1,6 +1,7 @@
 import { TextField } from "@mui/material";
-import React from "react";
+import React, { useContext } from "react";
 import { useNavigate } from "react-router";
+import { ThemeContext } from "../../App";
 import { useForm } from "../../customHooks/useForm";
 import { studentService } from "../../services/student.service";
 import { addStudents } from "../../store.toolkit/features/student.slice";
@@ -17,6 +18,8 @@ export default function AddClassroom() {
     age: "",
     profession: "",
   });
+
+  const color = useContext(ThemeContext);
 
   const onSubmitStudent = async (ev: React.FormEvent<HTMLFormElement>) => {
     ev.preventDefault();
@@ -84,7 +87,7 @@ export default function AddClassroom() {
           variant="outlined"
           required
         />
-        <S.SubmitButton>Add Student</S.SubmitButton>
+        <S.SubmitButton themeColor={color}>Add Student</S.SubmitButton>
       </S.StudentAddForm>
     </section>
   );

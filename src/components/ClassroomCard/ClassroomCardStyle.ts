@@ -26,7 +26,9 @@ export const BottomContainer = styled("div")({
   },
 });
 
-export const DeleteStudent = styled(DeleteIcon)({
-  color: "#3F50B5",
+export const DeleteStudent = styled(DeleteIcon, {
+  shouldForwardProp: (prop) => prop !== "themeColor",
+})<{ themeColor: string }>(({ themeColor }) => ({
+  color: themeColor,
   cursor: "pointer",
-});
+}));

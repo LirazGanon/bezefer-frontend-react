@@ -1,21 +1,20 @@
-import * as React from "react";
-import AppBar from "@mui/material/AppBar";
+import React, { useContext } from "react";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import IconButton from "@mui/material/IconButton";
 import MenuIcon from "@mui/icons-material/Menu";
-import Drawer from "@mui/material/Drawer";
-import List from "@mui/material/List";
-import ListItem from "@mui/material/ListItem";
-import ListItemIcon from "@mui/material/ListItemIcon";
-import ListItemText from "@mui/material/ListItemText";
-import { Link } from "react-router-dom";
 import * as S from "./AppHeaderStyle";
 import LeftDrawer from "../LeftDrawer/LeftDrawer";
+import { ThemeContext } from "../../App";
 
-export const AppHeader = () => {
+export const AppHeader: ({
+  toggleThemeColor,
+}: {
+  toggleThemeColor: () => void;
+}) => JSX.Element = ({ toggleThemeColor }) => {
   const [drawerOpen, setDrawerOpen] = React.useState(false);
+  const color = useContext(ThemeContext);
 
   const handleDrawerOpen = () => {
     setDrawerOpen(true);
@@ -27,7 +26,7 @@ export const AppHeader = () => {
 
   return (
     <Box sx={{ flexGrow: 1 }}>
-      <S.AppHeaderBar position="static">
+      <S.AppHeaderBar themeColor={color} position="static">
         <Toolbar>
           <IconButton
             size="large"
@@ -39,9 +38,10 @@ export const AppHeader = () => {
           >
             <MenuIcon />
           </IconButton>
-          <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+          <Typography variant="h6" component="div">
             Shob Classes
           </Typography>
+          <S.ToggleColorIcon onClick={toggleThemeColor} />
         </Toolbar>
       </S.AppHeaderBar>
       <LeftDrawer open={drawerOpen} onClose={handleDrawerClose} />

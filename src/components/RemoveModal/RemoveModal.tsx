@@ -1,4 +1,4 @@
-import React, { FC } from "react";
+import React, { FC, useContext } from "react";
 import Backdrop from "@mui/material/Backdrop";
 import Box from "@mui/material/Box";
 import Modal from "@mui/material/Modal";
@@ -14,6 +14,7 @@ import Avatar from "@mui/material/Avatar";
 import ListItemText from "@mui/material/ListItemText";
 import PersonIcon from "@mui/icons-material/Person";
 import * as S from "./RemoveModalStyle";
+import { ThemeContext } from "../../App";
 
 const style = {
   position: "absolute" as "absolute",
@@ -36,6 +37,8 @@ export const RemoveModal: FC<{
     studentId: number;
   }) => void;
 }> = ({ handleClose, open, students, classroom, deleteFromClass }) => {
+  const color = useContext(ThemeContext);
+
   if (!classroom) return null;
 
   const filterStudents = () => {
@@ -64,7 +67,7 @@ export const RemoveModal: FC<{
           <S.StudentItemText
             primary={`${student.firstName} ${student.lastName}`}
           />
-          <S.DeleteStudentIcon />
+          <S.DeleteStudentIcon themeColor={color} />
         </ListItemButton>
       </ListItem>
     ));

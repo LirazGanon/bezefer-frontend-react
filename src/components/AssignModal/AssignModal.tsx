@@ -1,4 +1,4 @@
-import React, { FC } from "react";
+import React, { FC, useContext } from "react";
 import Backdrop from "@mui/material/Backdrop";
 import Box from "@mui/material/Box";
 import Modal from "@mui/material/Modal";
@@ -15,6 +15,7 @@ import {
   ListItemText,
 } from "@mui/material";
 import * as S from "./AssignModalStyle";
+import { ThemeContext } from "../../App";
 
 const style = {
   position: "absolute" as "absolute",
@@ -37,6 +38,8 @@ export const AssignModal: FC<{
     studentId: number;
   }) => void;
 }> = ({ handleClose, open, classes, studentId, assignToClass }) => {
+  const color = useContext(ThemeContext);
+
   if (!studentId) return null;
 
   const filterClasses = () => {
@@ -60,7 +63,7 @@ export const AssignModal: FC<{
             </Avatar>
           </ListItemAvatar>
           <ListItemText primary={classroom.name} />
-          <span>+</span>
+          <S.PlusSpan themeColor={color}>+</S.PlusSpan>
         </ListItemButton>
       </ListItem>
     ));

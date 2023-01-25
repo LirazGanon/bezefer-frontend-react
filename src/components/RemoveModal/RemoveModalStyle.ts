@@ -6,9 +6,12 @@ export const Title = styled("h1")({
   textAlign: "center",
 });
 
-export const DeleteStudentIcon = styled(DeleteIcon)({
-  color: "#3F50B5",
-});
+export const DeleteStudentIcon = styled(DeleteIcon, {
+  shouldForwardProp: (prop) => prop !== "themeColor",
+})<{ themeColor: string }>(({ themeColor }) => ({
+  color: themeColor,
+  cursor: "pointer",
+}));
 
 export const StudentItemText = styled(ListItemText)({
   marginInlineEnd: "8px",
