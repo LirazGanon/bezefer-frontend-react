@@ -1,5 +1,5 @@
 import { TextField } from "@mui/material";
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { useNavigate } from "react-router";
 import { useForm } from "../../customHooks/useForm";
 import { classService } from "../../services/class.service";
@@ -7,7 +7,7 @@ import {
   addClassroom,
   Classroom,
 } from "../../store.toolkit/features/class.slice";
-import { useAppDispatch } from "../../store.toolkit/store";
+import { useAppDispatch, useAppSelector } from "../../store.toolkit/store";
 import * as S from "./AddClassroomStyle";
 import { ThemeContext } from "../../App";
 
@@ -15,6 +15,10 @@ export default function AddClassroom() {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
+  const [isIdValid, setIsIdValid] = useState(true);
+
+  const classes = useAppSelector((state) => state.classroom.Classes);
+  const classesIds = classes.map((classroom) => classroom._id);
   const color = useContext(ThemeContext);
 
   const [classroom, handleChange, setClassroom] = useForm({
@@ -22,6 +26,7 @@ export default function AddClassroom() {
     name: "",
     totalPlaces: "",
     placeLeft: "",
+    students: [],
   });
 
   const onSubmitClassroom = async (ev: React.FormEvent<HTMLFormElement>) => {
@@ -37,6 +42,15 @@ export default function AddClassroom() {
     } catch (err) {
       console.log("err", err);
     }
+  };
+
+  const validateClassId = (ev: React.ChangeEvent<HTMLInputElement>) => {
+    if (classesIds.includes(ev.target.value)) {
+      setIsIdValid(false);
+      return;
+    }
+    setIsIdValid(true);
+    handleChange(ev);
   };
 
   const validateMaxSeats = () => {
@@ -60,17 +74,30 @@ export default function AddClassroom() {
           label="Class ID"
           name="_id"
           variant="outlined"
-          onChange={handleChange}
-          helperText=" "
+          inputProps={{
+            inputMode: "numeric",
+            pattern: "[0-9]*",
+          }}
+          error={!isIdValid}
+          onChange={validateClassId}
+          helperText={isIdValid ? " " : "The IDentered is already in use."}
           required
         />
         <TextField
           id="outlined-basic"
           label="Name"
           name="name"
+          inputProps={{
+            pattern: "^[a-zA-Z0-9]*$",
+          }}
+          error={classroom.name !== "" && classroom.name.trim().length === 0}
+          helperText={
+            classroom.name !== "" && classroom.name.trim().length === 0
+              ? "Please fill out this field."
+              : " "
+          }
           onChange={handleChange}
           variant="outlined"
-          helperText=" "
           required
         />
         <TextField
@@ -79,7 +106,7 @@ export default function AddClassroom() {
           inputProps={{
             inputMode: "numeric",
             pattern: "[1-9]|[1-4][0-9]|50",
-          }} //TODO Fix Pattern
+          }}
           error={validateMaxSeats()}
           helperText={
             validateMaxSeats() ? "Only accept numbers between 1-50" : " "

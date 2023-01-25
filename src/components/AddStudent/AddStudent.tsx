@@ -40,8 +40,21 @@ export default function AddClassroom() {
           id="outlined-basic"
           label="ID"
           name="_id"
+          inputProps={{
+            inputMode: "numeric",
+            pattern: "[0-9]{9}",
+          }}
+          error={
+            isNaN(+student._id) ||
+            (student._id !== "" && student._id.length !== 9)
+          }
           variant="outlined"
-          helperText=" "
+          helperText={
+            isNaN(student._id) ||
+            (student._id !== "" && student._id.length !== 9)
+              ? "Please insert 9 digit."
+              : " "
+          }
           onChange={handleChange}
           required
         />
@@ -49,7 +62,14 @@ export default function AddClassroom() {
           id="outlined-basic"
           label="First Name"
           name="firstName"
-          helperText=" "
+          error={
+            student.firstName !== "" && student.firstName.trim().length === 0
+          }
+          helperText={
+            student.firstName !== "" && student.firstName.trim().length === 0
+              ? "Please fill out this field."
+              : " "
+          }
           onChange={handleChange}
           variant="outlined"
           required
@@ -58,7 +78,14 @@ export default function AddClassroom() {
           id="outlined-basic"
           label="Last Name"
           name="lastName"
-          helperText=" "
+          error={
+            student.lastName !== "" && student.lastName.trim().length === 0
+          }
+          helperText={
+            student.lastName !== "" && student.lastName.trim().length === 0
+              ? "Please fill out this field."
+              : " "
+          }
           onChange={handleChange}
           variant="outlined"
           required
@@ -69,7 +96,7 @@ export default function AddClassroom() {
           inputProps={{
             inputMode: "numeric",
             pattern: "[1-9]|[1-9][0-9]|1[0-1][0-9]|120",
-          }} //TODO Fix Pattern
+          }}
           error={student.age < 0 || student.age > 120}
           helperText={
             student.age < 0 || student.age > 120 ? "Invalid Age" : " "
@@ -82,7 +109,14 @@ export default function AddClassroom() {
           id="outlined-basic"
           label="Profession"
           name="profession"
-          helperText=" "
+          error={
+            student.profession !== "" && student.profession.trim().length === 0
+          }
+          helperText={
+            student.profession !== "" && student.profession.trim().length === 0
+              ? "Please fill out this field."
+              : " "
+          }
           onChange={handleChange}
           variant="outlined"
           required

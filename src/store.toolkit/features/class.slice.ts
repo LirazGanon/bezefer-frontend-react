@@ -71,7 +71,6 @@ export const ClassesSlice = createSlice({
           (studentId) => studentId === action.payload
         );
         if (studentIdx >= 0) {
-          console.log("hi");
           classroom.students.splice(studentIdx, 1);
           classroom.placeLeft++;
           classService.update(classroom);
