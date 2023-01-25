@@ -54,7 +54,7 @@ export default function AddClassroom() {
         <TextField
           id="outlined-basic"
           label="Last Name"
-          name="latName"
+          name="lastName"
           helperText=" "
           onChange={handleChange}
           variant="outlined"

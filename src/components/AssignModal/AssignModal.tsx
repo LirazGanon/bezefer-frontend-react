@@ -38,6 +38,34 @@ export const AssignModal: FC<{
   }) => void;
 }> = ({ handleClose, open, classes, studentId, assignToClass }) => {
   if (!studentId) return null;
+
+  const filterClasses = () => {
+    const ClassesToDisplay = classes.filter(
+      (classroom) =>
+        classroom.placeLeft > 0 && !classroom.students.includes(studentId)
+    );
+    if (!ClassesToDisplay.length)
+      return <p>There's no available class(es) at this moment.</p>;
+
+    return ClassesToDisplay.map((classroom) => (
+      <ListItem disableGutters key={classroom._id}>
+        <ListItemButton
+          onClick={() =>
+            assignToClass({ classroomId: classroom._id, studentId })
+          }
+        >
+          <ListItemAvatar>
+            <Avatar>
+              <SchoolIcon />
+            </Avatar>
+          </ListItemAvatar>
+          <ListItemText primary={classroom.name} />
+          <span>+</span>
+        </ListItemButton>
+      </ListItem>
+    ));
+  };
+
   return (
     <div>
       <Modal
@@ -54,31 +82,7 @@ export const AssignModal: FC<{
         <Fade in={open}>
           <Box sx={style}>
             <S.Title>Available Classes</S.Title>
-            <List>
-              {classes
-                .filter(
-                  (classroom) =>
-                    classroom.placeLeft > 0 &&
-                    !classroom.students.includes(studentId)
-                )
-                .map((classroom) => (
-                  <ListItem disableGutters key={classroom._id}>
-                    <ListItemButton
-                      onClick={() =>
-                        assignToClass({ classroomId: classroom._id, studentId })
-                      }
-                    >
-                      <ListItemAvatar>
-                        <Avatar>
-                          <SchoolIcon />
-                        </Avatar>
-                      </ListItemAvatar>
-                      <ListItemText primary={classroom.name} />
-                      <span>+</span>
-                    </ListItemButton>
-                  </ListItem>
-                ))}
-            </List>
+            <List>{filterClasses()}</List>
           </Box>
         </Fade>
       </Modal>

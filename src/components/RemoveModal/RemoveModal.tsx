@@ -37,6 +37,39 @@ export const RemoveModal: FC<{
   }) => void;
 }> = ({ handleClose, open, students, classroom, deleteFromClass }) => {
   if (!classroom) return null;
+
+  const filterStudents = () => {
+    const studentToDisplay = students.filter((student) =>
+      classroom.students.includes(student._id)
+    );
+
+    if (!studentToDisplay.length)
+      return <p>There's no student(s) in this class at this moment.</p>;
+
+    return studentToDisplay.map((student) => (
+      <ListItem disableGutters key={student._id}>
+        <ListItemButton
+          onClick={() =>
+            deleteFromClass({
+              classroomId: classroom._id,
+              studentId: student._id,
+            })
+          }
+        >
+          <ListItemAvatar>
+            <Avatar>
+              <PersonIcon />
+            </Avatar>
+          </ListItemAvatar>
+          <S.StudentItemText
+            primary={`${student.firstName} ${student.lastName}`}
+          />
+          <S.DeleteStudentIcon />
+        </ListItemButton>
+      </ListItem>
+    ));
+  };
+
   return (
     <div>
       <Modal
@@ -53,32 +86,7 @@ export const RemoveModal: FC<{
         <Fade in={open}>
           <Box sx={style}>
             <S.Title>Class Students</S.Title>
-            <List>
-              {students
-                .filter((student) => classroom.students.includes(student._id))
-                .map((student) => (
-                  <ListItem disableGutters key={student._id}>
-                    <ListItemButton
-                      onClick={() =>
-                        deleteFromClass({
-                          classroomId: classroom._id,
-                          studentId: student._id,
-                        })
-                      }
-                    >
-                      <ListItemAvatar>
-                        <Avatar>
-                          <PersonIcon />
-                        </Avatar>
-                      </ListItemAvatar>
-                      <S.StudentItemText
-                        primary={`${student.firstName} ${student.lastName}`}
-                      />
-                      <S.DeleteStudentIcon />
-                    </ListItemButton>
-                  </ListItem>
-                ))}
-            </List>
+            <List>{filterStudents()}</List>
           </Box>
         </Fade>
       </Modal>
