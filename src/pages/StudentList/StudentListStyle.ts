@@ -5,6 +5,7 @@ export const MainContainer = styled("main")({
 });
 
 // EXAMPLE HOW TO USE SELECTOR
+// TODO DELETE
 export const TableStudent = styled(TableRow)({
   "& :last-child": {
     fontSize: "50px",

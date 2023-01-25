@@ -3,19 +3,28 @@ import Backdrop from "@mui/material/Backdrop";
 import Box from "@mui/material/Box";
 import Modal from "@mui/material/Modal";
 import Fade from "@mui/material/Fade";
-import Typography from "@mui/material/Typography";
 import { Classroom } from "../../store.toolkit/features/class.slice";
+import SchoolIcon from "@mui/icons-material/School";
+
+import {
+  Avatar,
+  List,
+  ListItem,
+  ListItemAvatar,
+  ListItemButton,
+  ListItemText,
+} from "@mui/material";
+import * as S from "./AssignModalStyle";
 
 const style = {
   position: "absolute" as "absolute",
   top: "50%",
   left: "50%",
   transform: "translate(-50%, -50%)",
-  width: 400,
   bgcolor: "background.paper",
-  border: "2px solid #000",
+  borderRadius: "5px",
   boxShadow: 24,
-  p: 4,
+  p: 3,
 };
 
 export const AssignModal: FC<{
@@ -44,27 +53,32 @@ export const AssignModal: FC<{
       >
         <Fade in={open}>
           <Box sx={style}>
-            <Typography id="transition-modal-title" variant="h6" component="h2">
-              Available Classes
-            </Typography>
-            {classes
-              .filter(
-                (classroom) =>
-                  classroom.placeLeft > 0 &&
-                  !classroom.students.includes(studentId)
-              )
-              .map((classroom) => (
-                <div key={`${classroom._id}_${studentId}`}>
-                  <span>{classroom.name}</span>
-                  <button
-                    onClick={() =>
-                      assignToClass({ classroomId: classroom._id, studentId })
-                    }
-                  >
-                    +
-                  </button>
-                </div>
-              ))}
+            <S.Title>Available Classes</S.Title>
+            <List>
+              {classes
+                .filter(
+                  (classroom) =>
+                    classroom.placeLeft > 0 &&
+                    !classroom.students.includes(studentId)
+                )
+                .map((classroom) => (
+                  <ListItem disableGutters key={classroom._id}>
+                    <ListItemButton
+                      onClick={() =>
+                        assignToClass({ classroomId: classroom._id, studentId })
+                      }
+                    >
+                      <ListItemAvatar>
+                        <Avatar>
+                          <SchoolIcon />
+                        </Avatar>
+                      </ListItemAvatar>
+                      <ListItemText primary={classroom.name} />
+                      <span>+</span>
+                    </ListItemButton>
+                  </ListItem>
+                ))}
+            </List>
           </Box>
         </Fade>
       </Modal>
