@@ -18,6 +18,7 @@ import Paper from "@mui/material/Paper";
 import { studentService } from "../../services/student.service";
 import { AssignModal } from "../../components/AssignModal/AssignModal";
 import { Button } from "@mui/material";
+import { ConfirmDialog } from "../../components/ConfirmDialog/ConfirmDialog";
 
 export const StudentList: FC = () => {
   const students = useAppSelector((state) => state.student.students);
@@ -27,13 +28,29 @@ export const StudentList: FC = () => {
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
+  const [openConfirm, setOpenConfirm] = useState(false);
+
+  const handleConfirmOpen = () => {
+    setOpenConfirm(true);
+  };
+  const handleConfirmClose = () => {
+    setOpenConfirm(false);
+  };
+
+  const handleRemoveClick = (studentId: number) => {
+    setChosenStudentId(studentId);
+    handleConfirmOpen();
+  };
+
   const dispatch = useAppDispatch();
 
-  const removeStudent = async (studentId: number) => {
+  const removeStudent = async () => {
+    handleConfirmClose();
+    if (!chosenStudentId) return;
     try {
-      studentService.remove(studentId);
-      dispatch(deleteStudent(studentId));
-      dispatch(removeStudentFromAll(studentId));
+      studentService.remove(chosenStudentId);
+      dispatch(deleteStudent(chosenStudentId));
+      dispatch(removeStudentFromAll(chosenStudentId));
     } catch (err) {
       console.log("err", err);
     }
@@ -87,7 +104,7 @@ export const StudentList: FC = () => {
                 <TableCell align="center">
                   <Button
                     variant="outlined"
-                    onClick={() => removeStudent(student._id)}
+                    onClick={() => handleRemoveClick(student._id)}
                   >
                     DELETE
                   </Button>
@@ -103,6 +120,12 @@ export const StudentList: FC = () => {
         classes={classes}
         studentId={chosenStudentId}
         assignToClass={assignToClass}
+      />
+      <ConfirmDialog
+        handleClickOpen={handleConfirmOpen}
+        open={openConfirm}
+        handleClose={handleConfirmClose}
+        removeStudent={removeStudent}
       />
     </S.MainContainer>
   );

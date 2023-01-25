@@ -57,7 +57,7 @@ async function query(filterBy = {}) {
   return students;
 }
 
-async function remove(studentId: string | number) {
+async function remove(studentId: number) {
   return await storageService.remove(STORAGE_KEY, studentId);
   // return httpService.delete(`spa/${spaId}`)
 }
