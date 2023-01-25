@@ -13,6 +13,8 @@ import {
 } from "../../store.toolkit/features/class.slice";
 import { useAppDispatch, useAppSelector } from "../../store.toolkit/store";
 import { RemoveModal } from "../RemoveModal/RemoveModal";
+import DeleteIcon from "@mui/icons-material/Delete";
+import * as S from "./ClassroomCardStyle";
 
 const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
   props,
@@ -66,17 +68,17 @@ export const ClassroomCard: FC<{ classroom: Classroom }> = ({ classroom }) => {
   return (
     <>
       <Grid item xs={3}>
-        <Card>
-          <CardContent>
+        <S.ClassroomCard>
+          <div>
             <h1>{classroom.name}</h1>
-            <h4>There are {classroom.placeLeft} seats left</h4>
-            <p>Out of {classroom.totalPlaces}</p>
-            <div>
-              <h3 onClick={handleOpen}>STUDENT LIST</h3>
-              <button onClick={deleteClass}>X</button>
-            </div>
-          </CardContent>
-        </Card>
+            <p>There are {classroom.placeLeft} seats left</p>
+            <S.POutOf>Out of {classroom.totalPlaces}</S.POutOf>
+          </div>
+          <S.BottomContainer>
+            <p onClick={handleOpen}>STUDENTS LIST</p>
+            <S.DeleteStudent onClick={deleteClass}>X</S.DeleteStudent>
+          </S.BottomContainer>
+        </S.ClassroomCard>
       </Grid>
       <RemoveModal
         handleClose={handleClose}
