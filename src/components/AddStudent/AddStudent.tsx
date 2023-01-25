@@ -31,7 +31,7 @@ export default function AddClassroom() {
 
   return (
     <section>
-      <h1>Add new student</h1>
+      <S.FormTitle>Add new student</S.FormTitle>
       <S.StudentAddForm onSubmit={onSubmitStudent}>
         <TextField
           id="outlined-basic"

@@ -17,6 +17,7 @@ import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import { studentService } from "../../services/student.service";
 import { AssignModal } from "../../components/AssignModal/AssignModal";
+import { Button } from "@mui/material";
 
 export const StudentList: FC = () => {
   const students = useAppSelector((state) => state.student.students);
@@ -76,12 +77,20 @@ export const StudentList: FC = () => {
                 <TableCell align="center">{student.age}</TableCell>
                 <TableCell align="center">{student.profession}</TableCell>
                 <TableCell align="center">
-                  <button onClick={() => openAssignModal(student._id)}>
-                    Assign
-                  </button>
+                  <Button
+                    variant="outlined"
+                    onClick={() => openAssignModal(student._id)}
+                  >
+                    ASSIGN TO CLASS
+                  </Button>
                 </TableCell>
                 <TableCell align="center">
-                  <button onClick={() => removeStudent(student._id)}>X</button>
+                  <Button
+                    variant="outlined"
+                    onClick={() => removeStudent(student._id)}
+                  >
+                    DELETE
+                  </Button>
                 </TableCell>
               </TableRow>
             ))}

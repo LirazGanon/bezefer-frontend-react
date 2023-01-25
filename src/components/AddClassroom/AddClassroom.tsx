@@ -50,7 +50,7 @@ export default function AddClassroom() {
 
   return (
     <section>
-      <h1>Create new class</h1>
+      <S.FormTitle>Create new class</S.FormTitle>
       <S.ClassroomAddForm onSubmit={onSubmitClassroom}>
         <TextField
           id="outlined-basic"
