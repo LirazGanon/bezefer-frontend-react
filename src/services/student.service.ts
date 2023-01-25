@@ -7,6 +7,7 @@ export const studentService = {
   query,
   save,
   remove,
+  update,
 };
 
 async function query(filterBy = {}) {
@@ -74,6 +75,18 @@ async function save(student: Student) {
   return savedStudent;
 }
 
+async function update(student: Student) {
+  var savedStudent;
+  // if (classroom._id) {
+  savedStudent = await storageService.put(STORAGE_KEY, student);
+  // savedClassroom = await httpService.put(`spa/${spa._id}`, classroom)
+  // } else {
+  // savedStudent = await storageService.post(STORAGE_KEY, student);
+  // savedClassroom = await httpService.post('spa', classroom)
+  // }
+  return savedStudent;
+}
+
 function _getDemoStudents() {
   const students = [
     {
@@ -82,6 +95,7 @@ function _getDemoStudents() {
       lastName: "שימי",
       age: 65,
       profession: "חשמליזציה",
+      classroom: null,
     },
     {
       _id: 435476567,
@@ -89,6 +103,7 @@ function _getDemoStudents() {
       lastName: "בן יוסי",
       age: 99,
       profession: "יוסאי",
+      classroom: null,
     },
     {
       _id: 272727270,
@@ -96,6 +111,7 @@ function _getDemoStudents() {
       lastName: "ויינהאוס",
       age: 27,
       profession: "זמרת בכירה",
+      classroom: null,
     },
     {
       _id: 435835540,
@@ -103,6 +119,7 @@ function _getDemoStudents() {
       lastName: "סומע",
       age: 100,
       profession: "מורה רוחני",
+      classroom: null,
     },
     {
       _id: 938465769,
@@ -110,6 +127,7 @@ function _getDemoStudents() {
       lastName: "רף",
       age: 32,
       profession: "מטקאי",
+      classroom: null,
     },
   ];
 

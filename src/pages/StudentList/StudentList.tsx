@@ -6,7 +6,11 @@ import {
   removeStudentFromAll,
 } from "../../store.toolkit/features/class.slice";
 import * as S from "./StudentListStyle";
-import { deleteStudent } from "../../store.toolkit/features/student.slice";
+import {
+  deleteStudent,
+  Student,
+  updateStudent,
+} from "../../store.toolkit/features/student.slice";
 
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
@@ -67,6 +71,14 @@ export const StudentList: FC = () => {
     classroomId: number | string;
     studentId: number;
   }) => {
+    let student = students.find(
+      (student: Student) => student._id === payload.studentId
+    );
+    if (student) {
+      student = { ...student };
+      student.classroom = payload.classroomId;
+      dispatch(updateStudent(student));
+    }
     dispatch(assignStudent(payload));
   };
 
@@ -122,6 +134,7 @@ export const StudentList: FC = () => {
         handleClose={handleClose}
         open={open}
         classes={classes}
+        students={students}
         studentId={chosenStudentId}
         assignToClass={assignToClass}
       />

@@ -17,6 +17,7 @@ export default function AddClassroom() {
     lastName: "",
     age: "",
     profession: "",
+    classroom: null,
   });
 
   const color = useContext(ThemeContext);

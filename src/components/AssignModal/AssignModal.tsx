@@ -16,6 +16,7 @@ import {
 } from "@mui/material";
 import * as S from "./AssignModalStyle";
 import { ThemeContext } from "../../App";
+import { Student } from "../../store.toolkit/features/student.slice";
 
 const style = {
   position: "absolute" as "absolute",
@@ -32,17 +33,33 @@ export const AssignModal: FC<{
   handleClose: () => void;
   open: boolean;
   classes: Classroom[];
+  students: Student[];
   studentId: number | undefined;
   assignToClass: (payload: {
     classroomId: number | string;
     studentId: number;
   }) => void;
-}> = ({ handleClose, open, classes, studentId, assignToClass }) => {
+}> = ({ handleClose, open, classes, studentId, assignToClass, students }) => {
   const color = useContext(ThemeContext);
 
   if (!studentId) return null;
 
   const filterClasses = () => {
+    const studentClassroomId = students.find(
+      (student) => student._id === studentId
+    )?.classroom;
+    if (studentClassroomId) {
+      const classroom = classes.find(
+        (classroom) => classroom._id === studentClassroomId
+      );
+      return (
+        <p>
+          This student is assigned to a class. If you want to add him to another
+          class, please remove him from {classroom?.name} class first.
+        </p>
+      );
+    }
+
     const ClassesToDisplay = classes.filter(
       (classroom) =>
         classroom.placeLeft > 0 && !classroom.students.includes(studentId)

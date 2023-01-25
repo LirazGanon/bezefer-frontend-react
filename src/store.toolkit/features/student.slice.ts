@@ -7,7 +7,8 @@ export interface Student {
   firstName: string;
   lastName: string;
   age?: number;
-  profession?: string;
+  profession: string;
+  classroom?: string | number;
 }
 
 interface StudentsState {
@@ -28,6 +29,15 @@ export const studentsSlice = createSlice({
     addStudents: (state, action: PayloadAction<Student>) => {
       state.students.push(action.payload);
     },
+    updateStudent: (state, action: PayloadAction<Student>) => {
+      const idx = state.students.findIndex(
+        (student) => student._id === action.payload._id
+      );
+      console.log(idx);
+      state.students[idx] = action.payload;
+      console.log(action.payload);
+      studentService.update(action.payload);
+    },
     deleteStudent: (state, action: PayloadAction<number>) => {
       state.students = state.students.filter(
         (student) => student._id !== action.payload
@@ -36,7 +46,7 @@ export const studentsSlice = createSlice({
   },
 });
 
-export const { setStudents, addStudents, deleteStudent } =
+export const { setStudents, addStudents, deleteStudent, updateStudent } =
   studentsSlice.actions;
 
 export const getStudents = () => async (dispatch: Dispatch) => {

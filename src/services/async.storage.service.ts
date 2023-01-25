@@ -27,7 +27,7 @@ function get(entityType: string, entityId: string): Promise<any> {
 
 function post(entityType: string, newEntity: any): Promise<any> {
   newEntity = JSON.parse(JSON.stringify(newEntity));
-  newEntity._id = makeId();
+  // newEntity._id = makeId();
   return query(entityType).then((entities) => {
     entities.push(newEntity);
     _save(entityType, entities);
