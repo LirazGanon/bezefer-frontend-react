@@ -33,8 +33,8 @@ export const ConfirmDialog: ({
         </DialogTitle>
         <DialogContent>
           <DialogContentText>
-            Are you sure you want to delete this student from your school anf
-            from all their assigned assign classes?
+            Are you sure you want to delete this student from your school and
+            from his assigned assign class?
           </DialogContentText>
         </DialogContent>
         <DialogActions>
