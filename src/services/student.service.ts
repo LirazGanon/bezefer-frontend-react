@@ -1,3 +1,4 @@
+import axios from "axios";
 import { Student } from "../store.toolkit/features/student.slice";
 import { storageService } from "./async.storage.service";
 
@@ -10,80 +11,42 @@ export const studentService = {
   update,
 };
 
-async function query(filterBy = {}) {
-  // return httpService.get(STORAGE_KEY, filterBy)
+const instance = axios.create({
+  baseURL: "http://localhost:3000/api/",
+  timeout: 10000,
+  headers: { "X-Custom-Header": "foobar" },
+});
+
+async function query() {
+  return (await instance.get("students")).data;
 
   var students = await storageService.query(STORAGE_KEY);
   if (!students || !students.length) {
     students = _getDemoStudents();
     localStorage.setItem(STORAGE_KEY, JSON.stringify(students));
   }
-  // if (filterBy.txt) {
-  //   const regex = new RegExp(filterBy.txt, "i");
-  //   spas = spas.filter((spa) => {
-  //     return (
-  //       regex.test(spa.name) ||
-  //       regex.test(spa.location.city) ||
-  //       regex.test(spa.categories)
-  //     );
-  //   });
-  // }
-  // if (filterBy.minPrice) {
-  //   spas = spas.filter((spa) =>
-  //     spa.packs.some((pack) => pack.price >= filterBy.minPrice)
-  //   );
-  // }
-  // if (filterBy.maxPrice) {
-  //   spas = spas.filter((spa) =>
-  //     spa.packs.some((pack) => pack.price <= filterBy.price)
-  //   );
-  // }
-
-  // if (filterBy.guests) {
-
-  //   spas = spas.filter((spa) => {
-  //     return spa.guests.includes(filterBy.guests);
-  //   });
-  //   console.log('spas', spas)
-  // }
-
-  // if (filterBy.amenities?.length) {
-  //   spas = spas.filter((spa) =>
-  //     filterBy.amenities.every((amenity) => spa.amenities.includes(amenity))
-  //   );
-  // }
-  // if (filterBy.city) {
-  //   spas = spas.filter(spa => spa.location.city.toLowerCase() === filterBy.city.toLowerCase())
-  // }
   return students;
 }
 
 async function remove(studentId: number) {
+  return (await instance.delete(`students/${studentId}`)).data;
+
   return await storageService.remove(STORAGE_KEY, studentId);
-  // return httpService.delete(`spa/${spaId}`)
 }
 
 async function save(student: Student) {
-  var savedStudent;
-  // if (classroom._id) {
-  // savedClassroom = await storageService.put(STORAGE_KEY, classroom);
-  // savedClassroom = await httpService.put(`spa/${spa._id}`, classroom)
-  // } else {
-  savedStudent = await storageService.post(STORAGE_KEY, student);
-  // savedClassroom = await httpService.post('spa', classroom)
-  // }
+  return (await instance.post("students", student)).data;
+
+  const savedStudent = await storageService.post(STORAGE_KEY, student);
+
   return savedStudent;
 }
 
 async function update(student: Student) {
-  var savedStudent;
-  // if (classroom._id) {
-  savedStudent = await storageService.put(STORAGE_KEY, student);
-  // savedClassroom = await httpService.put(`spa/${spa._id}`, classroom)
-  // } else {
-  // savedStudent = await storageService.post(STORAGE_KEY, student);
-  // savedClassroom = await httpService.post('spa', classroom)
-  // }
+  return (await instance.patch(`students/${student._id}`, student)).data;
+
+  const savedStudent = await storageService.put(STORAGE_KEY, student);
+
   return savedStudent;
 }
 

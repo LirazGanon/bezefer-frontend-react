@@ -3,15 +3,15 @@ import Axios from "axios";
 //TODO Fix Type
 
 const BASE_URL =
-  process.env.NODE_ENV === "production" ? "/api/" : "//localhost:3030/api/";
+  process.env.NODE_ENV === "production" ? "/api/" : "//localhost:3000/api/";
 
 const axios = Axios.create({
   withCredentials: true,
 });
 
 export const httpService = {
-  get(endpoint: string, data: any) {
-    return ajax(endpoint, "GET", data);
+  get(endpoint: string) {
+    return ajax(endpoint, "GET");
   },
   post(endpoint: string, data: any) {
     return ajax(endpoint, "POST", data);
