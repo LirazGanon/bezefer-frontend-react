@@ -12,8 +12,11 @@ export const classService = {
   update,
 };
 
+const BASE_URL =
+  process.env.NODE_ENV === "production" ? "/api/" : "//localhost:3000/api/";
+
 const instance = axios.create({
-  baseURL: "http://localhost:3000/api/",
+  baseURL: BASE_URL,
   timeout: 10000,
   headers: { "X-Custom-Header": "foobar" },
 });
