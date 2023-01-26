@@ -16,6 +16,7 @@ import { RemoveModal } from "../RemoveModal/RemoveModal";
 import DeleteIcon from "@mui/icons-material/Delete";
 import * as S from "./ClassroomCardStyle";
 import { ThemeContext } from "../../App";
+import { removeStudentClassroom } from "../../store.toolkit/features/student.slice";
 
 const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
   props,
@@ -52,6 +53,7 @@ export const ClassroomCard: FC<{ classroom: Classroom }> = ({ classroom }) => {
     studentId: number;
   }) => {
     dispatch(removeStudent(payload));
+    dispatch(removeStudentClassroom(payload.studentId));
   };
 
   const deleteClass = async () => {
