@@ -27,6 +27,8 @@ const style = {
   borderRadius: "5px",
   boxShadow: 24,
   p: 3,
+  maxHeight: "80vh",
+  overflow: "auto",
 };
 
 export const AssignModal: FC<{

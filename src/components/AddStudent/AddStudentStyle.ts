@@ -1,15 +1,17 @@
 import { styled } from "@mui/material";
 
 export const FormTitle = styled("h2")({
-  fontSize: "2.4em",
+  fontSize: "clamp(1.2rem, 3vw, 2.4rem)",
+  textAlign: "center",
   fontWeight: "400",
+  marginBottom: "1em",
 });
 
 export const StudentAddForm = styled("form")({
   display: "flex",
   flexDirection: "column",
   "& > div": {
-    width: "80%",
+    ["@media (min-width:600px)"]: { width: "80%" },
     alignSelf: "center",
   },
 });
@@ -19,7 +21,7 @@ export const SubmitButton = styled("button", {
 })<{ themeColor: string }>(({ themeColor }) => ({
   color: "#fff",
   padding: "10px",
-  fontSize: "1.25rem",
+  fontSize: "clamp(1rem,2vw,1.25rem)",
   textTransform: "uppercase",
   background: themeColor,
   border: "none",

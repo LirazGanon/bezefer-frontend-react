@@ -72,7 +72,7 @@ export const ClassroomCard: FC<{ classroom: Classroom }> = ({ classroom }) => {
 
   return (
     <>
-      <Grid item xs={3}>
+      <Grid item xs={12} sm={6} md={4} lg={3}>
         <S.ClassroomCard>
           <div>
             <h1>{classroom.name}</h1>

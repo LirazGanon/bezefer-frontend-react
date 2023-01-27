@@ -87,7 +87,7 @@ export const StudentList: FC = () => {
   return (
     <S.MainContainer>
       <TableContainer component={Paper}>
-        <Table sx={{ minWidth: 650 }} aria-label="simple table">
+        <Table sx={{ minWidth: 850 }} aria-label="simple table">
           <TableHead>
             <TableRow>
               <TableCell align="center">ID</TableCell>
