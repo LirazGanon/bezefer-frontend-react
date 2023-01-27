@@ -80,7 +80,7 @@ export default function AddClassroom() {
           }}
           error={!isIdValid}
           onChange={validateClassId}
-          helperText={isIdValid ? " " : "The IDentered is already in use."}
+          helperText={isIdValid ? " " : "The ID entered is already in use."}
           required
         />
         <TextField

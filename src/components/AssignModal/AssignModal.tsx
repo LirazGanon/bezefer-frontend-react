@@ -57,7 +57,8 @@ export const AssignModal: FC<{
       return (
         <p>
           This student is assigned to a class. If you want to add him to another
-          class, please remove him from {classroom?.name} class first.
+          class, please remove him from <strong>{classroom?.name}</strong> class
+          first.
         </p>
       );
     }
