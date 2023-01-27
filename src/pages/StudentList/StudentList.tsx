@@ -86,7 +86,7 @@ export const StudentList: FC = () => {
 
   return (
     <S.MainContainer>
-      <TableContainer component={Paper}>
+      <S.TContainer>
         <Table sx={{ minWidth: 850 }} aria-label="simple table">
           <TableHead>
             <TableRow>
@@ -129,7 +129,7 @@ export const StudentList: FC = () => {
             ))}
           </TableBody>
         </Table>
-      </TableContainer>
+      </S.TContainer>
       <AssignModal
         handleClose={handleClose}
         open={open}
