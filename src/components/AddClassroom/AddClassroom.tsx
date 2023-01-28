@@ -1,4 +1,4 @@
-import { TextField } from "@mui/material";
+import { FormHelperText, TextField } from "@mui/material";
 import React, { useContext, useState } from "react";
 import { useNavigate } from "react-router";
 import { useForm } from "../../customHooks/useForm";
@@ -10,15 +10,22 @@ import {
 import { useAppDispatch, useAppSelector } from "../../store.toolkit/store";
 import * as S from "./AddClassroomStyle";
 import { ThemeContext } from "../../App";
+import { BackdropLoader } from "../BackdropLoader/BackdropLoader";
 
 export default function AddClassroom() {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
+  const [openBackDrop, setOpenBackDrop] = useState(false);
+  const handleCloseBackDrop = () => {
+    setOpenBackDrop(false);
+  };
+  const handleToggleBackDrop = () => {
+    setOpenBackDrop(!openBackDrop);
+  };
+
   const [isIdValid, setIsIdValid] = useState(true);
 
-  const classes = useAppSelector((state) => state.classroom.Classes);
-  const classesIds = classes.map((classroom) => classroom._id);
   const color = useContext(ThemeContext);
 
   const [classroom, handleChange, setClassroom] = useForm({
@@ -31,10 +38,21 @@ export default function AddClassroom() {
 
   const onSubmitClassroom = async (ev: React.FormEvent<HTMLFormElement>) => {
     ev.preventDefault();
+    handleToggleBackDrop();
+    const classes: Classroom[] = await classService.query();
+    const classesIds = classes.map((classroom) => classroom._id);
+
     const classroomToSave: Classroom = {
       ...classroom,
       placeLeft: classroom.totalPlaces,
     };
+
+    if (classesIds.includes(classroomToSave._id)) {
+      setIsIdValid(false);
+      handleCloseBackDrop();
+      return;
+    }
+
     try {
       dispatch(addClassroom(classroomToSave));
       classService.save(classroomToSave);
@@ -45,10 +63,6 @@ export default function AddClassroom() {
   };
 
   const validateClassId = (ev: React.ChangeEvent<HTMLInputElement>) => {
-    if (classesIds.includes(ev.target.value)) {
-      setIsIdValid(false);
-      return;
-    }
     setIsIdValid(true);
     handleChange(ev);
   };
@@ -83,13 +97,11 @@ export default function AddClassroom() {
           helperText={isIdValid ? " " : "The ID entered is already in use."}
           required
         />
+
         <TextField
           id="outlined-basic"
           label="Name"
           name="name"
-          inputProps={{
-            pattern: "^[a-zA-Z0-9]*$",
-          }}
           error={classroom.name !== "" && classroom.name.trim().length === 0}
           helperText={
             classroom.name !== "" && classroom.name.trim().length === 0
@@ -118,6 +130,7 @@ export default function AddClassroom() {
         />
         <S.SubmitButton themeColor={color}>Create Class</S.SubmitButton>
       </S.ClassroomAddForm>
+      <BackdropLoader open={openBackDrop} />
     </section>
   );
 }
